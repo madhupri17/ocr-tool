@@ -19,6 +19,7 @@ def ocr_read_document(image_path: str) -> str:
 
 # 1. Define your tools list
 tools = [ocr_read_document]
+##
 
 # 2. Define your LLM
 llm = ChatOpenAI(

@@ -64,5 +64,48 @@ b = 100
 x_i = 1.2
 cost_1200sqft = w * x_i + b    
 print(f"${cost_1200sqft:.0f} thousand dollars")
-print("Plot window opened. Close it to finish.")
+plt.show()
+
+# Define cost function
+def compute_cost(x, y, w, b):
+    """
+    Computes the cost function for linear regression.
+    """
+    m = x.shape[0]
+    cost_sum = 0
+    for i in range(m):
+        f_wb = w * x[i] + b
+        cost = (f_wb - y[i]) ** 2
+        cost_sum = cost_sum + cost
+    total_cost = (1 / (2 * m)) * cost_sum
+    return total_cost
+
+# Plot cost vs w
+w_range = np.linspace(0, 400, 100)
+costs = []
+b_fixed = 100
+
+for w_val in w_range:
+    cost = compute_cost(x_train, y_train, w_val, b_fixed)
+    costs.append(cost)
+
+plt.figure(figsize=(10, 5))
+plt.plot(w_range, costs, c='b', label='Cost Function')
+plt.scatter([w], [compute_cost(x_train, y_train, w, b_fixed)], marker='x', c='r', s=100, label=f'Current w={w}')
+plt.xlabel('Weight (w)')
+plt.ylabel('Cost')
+plt.title('Cost vs Weight (w)')
+plt.legend()
+plt.show()
+x_train = np.array([1.0, 1.7, 2.0, 2.5, 3.0, 3.2])
+y_train = np.array([250, 300, 480,  430,   630, 730,])
+plt.close('all') 
+
+# Plot the new training data
+plt.figure(figsize=(10, 5))
+plt.scatter(x_train, y_train, marker='x', c='r', label='Training data')
+plt.xlabel('Size (1000 sqft)')
+plt.ylabel('Price (1000s of dollars)')
+plt.title('Updated Training Data')
+plt.legend()
 plt.show()
